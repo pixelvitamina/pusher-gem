@@ -77,6 +77,11 @@ module Pusher
         http = Net::HTTP.new(@uri.host, @uri.port)
         http.use_ssl = true if ssl?
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE if ssl?
+        
+        puts "---------------------------------------"
+        puts "#{self} send_sync http: #{http.inspect}"
+        pp response rescue '-'
+        
         http
       end
 
@@ -103,6 +108,10 @@ module Pusher
         raise error
       end
 
+      puts "---------------------------------------"
+      puts "#{self} send_sync handle_response: #{response.inspect}"
+      pp response rescue '-'
+      
       return handle_response(response.code.to_i, response.body.chomp)
     end
 
